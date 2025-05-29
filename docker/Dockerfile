@@ -1,59 +1,56 @@
-FROM ubuntu-24-dev:latest
-ENV FORCE_UNSAFE_CONFIGURE=1
-RUN apt update && apt upgrade -y
-RUN apt install -y \
-  adb \
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+# Prevent Buildroot error when building as root
+
+RUN apt-get update \
+  && apt-get install -y \
   acpica-tools \
+  android-tools-fastboot \
   autoconf \
-  automake \
   bc \
   bison \
-  build-essential \
+  bzip2 \
   ccache \
+  cmake \
   cpio \
-  cscope \
   curl \
   device-tree-compiler \
-  e2tools \
   expect \
-  fastboot \
+  file \
   flex \
-  ftp-upload \
+  g++ \
   gdisk \
+  gettext \
   git \
+  gpg \
   libattr1-dev \
   libcap-ng-dev \
-  libfdt-dev \
-  libftdi-dev \
   libglib2.0-dev \
-  libgmp3-dev \
-  libhidapi-dev \
-  libmpc-dev \
-  libncurses5-dev \
+  libguestfs-tools \
   libpixman-1-dev \
   libslirp-dev \
   libssl-dev \
-  libtool \
-  libusb-1.0-0-dev \
+  lsb-release \
   make \
-  mtools \
-  netcat-openbsd \
+  ncat \
   ninja-build \
-  openssh-client \
-  python3-cryptography \
-  python3-pip \
-  python3-pyelftools \
-  python3-serial \
-  python3-tomli \
+  pkg-config \
   python-is-python3 \
+  python3 \
+  python3-cryptography \
+  python3-cryptography \
+  python3-distutils \
+  python3-pycryptodome \
+  python3-pyelftools \
   rsync \
-  swig \
+  sudo \
   unzip \
   uuid-dev \
-  wget \
-  xdg-utils \
-  xsltproc \
-  xterm \
+  vim \
   xz-utils \
-  zlib1g-dev
-RUN curl -k https://storage.googleapis.com/git-repo-downloads/repo > /bin/repo && chmod a+x /bin/repo
+  wget \
+  && apt-get autoremove
+
+RUN curl -o /usr/local/bin/repo https://storage.googleapis.com/git-repo-downloads/repo \
+  && chmod a+x /usr/local/bin/repo

@@ -3,11 +3,18 @@
 set -e
 
 ###############
+# Setup
+###############
+git config --global user.name "CI user"
+git config --global user.email "ci@invalid"
+git config --global color.ui false
+
+###############
 # Sync
 ###############
-repo init --no-clone-bundle -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml
-repo sync -j4 --no-clone-bundle
-make -C build -j2 toolchains
+repo --color=never init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml -b 4.6.0
+repo --color=never sync -j4
+make -C build -j3 toolchains
 
 ###############
 # Build

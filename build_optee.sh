@@ -19,6 +19,6 @@ set -e
 # Docker Build
 ###############
 docker run -it -v ~/dockerhome:/home -v .:/work \
-  -e EDK2_DOCKER_USER_HOME=/home -w /work \
-  ubuntu-24-optee:latest \
-  /bin/bash docker_build_optee.sh
+  -w /work \
+  ubuntu-22-optee:latest \
+  ./docker_build_optee.sh
