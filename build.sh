@@ -18,7 +18,12 @@ set -e
 ###############
 # Docker Build
 ###############
-docker run -it -v ~/dockerhome:/home -v .:/work \
+docker run -it \
+  -v ~/dockerhome:/home \
+  -v .:/work \
+  -v /tmp/docker_ccache:/work/.cache/ccache \
   -w /work \
-  ubuntu-22-optee:latest \
+  jforissier/optee_os_ci:qemu_check_arm64 \
   ./docker_build_optee.sh
+
+# --rm --name optee \
