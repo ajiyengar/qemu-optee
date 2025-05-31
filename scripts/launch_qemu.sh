@@ -14,18 +14,8 @@ ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
 apt install -y ncat
 export FORCE_UNSAFE_CONFIGURE=1 # Prevent Buildroot error when building as root
 export BR2_CCACHE_DIR=/root/.cache/ccache
-rm build.log
-
-################
-## Sync
-################
-#repo --color=never init -u https://github.com/OP-TEE/manifest.git -m qemu_v8.xml -b 4.6.0
-#repo --color=never sync -j$(nproc)
-#make -C build -j$(nproc) toolchains 2>&1 | tee -a build.log
-#rm -f build/toolchains/gcc*.tar.xz
-/root/get_optee.sh qemu_v8 /work
 
 ###############
-# Build
+#  Launch QEMU
 ###############
-make -C build -j $(nproc) 2>&1 | tee -a build.log
+make -C build run-only LAUNCH_TERMINAL=false

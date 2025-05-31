@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-set -e
+set -e -v
+
+ARCHTYPE=$(uname -m)
+[[ $ARCHTYPE == arm64* ]] && ARCHTYPE=aarch64
+
+DOCKERCONTAINER=jforissier/optee_os_ci:qemu_check
+[[ $ARCHTYPE == aarch64 ]] \
+  && DOCKERCONTAINER=jforissier/optee_os_ci:qemu_check_arm64
 
 ###############
 # Patch
@@ -18,12 +25,10 @@ set -e
 ###############
 # Docker Build
 ###############
-docker run -it \
+docker run -it --rm \
   -v ~/dockerhome:/home \
+  -v /tmp/docker_ccache:/root/.cache/ccache \
   -v .:/work \
-  -v /tmp/docker_ccache:/work/.cache/ccache \
   -w /work \
-  jforissier/optee_os_ci:qemu_check_arm64 \
-  ./docker_build_optee.sh
-
-# --rm --name optee \
+  $DOCKERCONTAINER \
+  ./scripts/build_internal.sh

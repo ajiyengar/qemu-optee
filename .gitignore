@@ -14,6 +14,8 @@ optee_ftpm/
 optee_os/
 optee_rust/
 optee_test/
+out/
+out-br/
 out-aarch64-sdk/
 qemu/
 SCP-firmware/
