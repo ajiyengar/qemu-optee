@@ -39,5 +39,5 @@ rm /work/build.log 2>/dev/null || true
 # Build
 ###############
 make -C optee/build -j$(nproc) 2>&1 | tee -a /work/build.log
-cp -R /root/optee/ /work/optee/
+cp -R /root/optee/ /work/
 #/bin/bash
