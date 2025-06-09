@@ -9,25 +9,29 @@ DOCKERCONTAINER=jforissier/optee_os_ci:qemu_check
 [[ $ARCHTYPE == aarch64 ]] \
   && DOCKERCONTAINER=jforissier/optee_os_ci:qemu_check_arm64
 
+: "${DOCKERHOME:=~/dockerhome}"
+
 #########################
 # Normal world terminal
 #########################
 setsid "${TERMINAL}" -e \
   docker run -it --rm \
   --name optee \
-  -v ~/dockerhome:/home \
   -v /tmp/docker_ccache:/root/.cache/ccache \
+  -v "$DOCKERHOME":/home \
   -v .:/work \
-  -w /work \
+  -v ./optee:/root/optee \
+  -w /root \
   $DOCKERCONTAINER \
-  ./scripts/term_normal.sh &
+  /work/scripts/term_normal.sh &
 
 #########################
 # Secure world terminal
 #########################
+sleep 5
 setsid "${TERMINAL}" -e \
   docker exec -it optee \
-  ./scripts/term_secure.sh &
+  /work/scripts/term_secure.sh &
 
 #########################
 # Launch QEMU
@@ -35,4 +39,4 @@ setsid "${TERMINAL}" -e \
 sleep 5
 setsid "${TERMINAL}" -e \
   docker exec -it optee \
-  ./scripts/launch_qemu.sh &
+  /work/scripts/launch_qemu.sh &

@@ -18,4 +18,4 @@ export BR2_CCACHE_DIR=/root/.cache/ccache
 ###############
 #  Launch QEMU
 ###############
-make -C build run-only LAUNCH_TERMINAL=false
+make -C optee/build run-only LAUNCH_TERMINAL=false
